@@ -16,7 +16,7 @@ struct cpu {
   struct proc *proc;           // The currently-running process.
 };
 
-struct cpu cpus[NCPU];
+extern struct cpu cpus[NCPU];
 
 #define curr_cpu (&cpus[0])
 #define curr_proc   (cpus[0].proc)

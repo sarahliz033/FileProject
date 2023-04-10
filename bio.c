@@ -14,6 +14,12 @@
 #include "user.h"
 
 int fs;
+struct cpu cpus[NCPU];
+
+void panic(char *s) {
+    printf("%s\n", s);
+    exit(1);
+}
 
 int bread(uint block, char *buf) {
     int off = lseek(fs, block*BSIZE, SEEK_SET);
