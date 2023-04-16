@@ -32,7 +32,7 @@ void panic();
 
 int get_opts(int count, char *args[]) {
     int opt, len, i, good = 1;
-    while (good && (opt = getopt(count, args, "s:l:")) != -1) {
+    while (good && (opt = getopt(count, args, "s:l:i:")) != -1) {
         int len, i;
         switch (opt) {
             case 's':
@@ -57,6 +57,12 @@ int get_opts(int count, char *args[]) {
                 if (good)
                     blocks = atoi(optarg);
                 break;
+            //NEW FLAG ADDITION
+            case 'i':
+                start_block = 4;//Start at inode block
+                blocks = 4;//End four blocks down to illustrate all inode spaces.
+                printf("Inode blocks:\n");
+                break;
             case ':':
                 fprintf(stderr, "option missing value\n");
                 break;
@@ -71,6 +77,7 @@ int get_opts(int count, char *args[]) {
                    fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
                 good = 0;
                 break;
+            
         }
     }
     if(good && optind > count-1) {

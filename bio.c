@@ -188,11 +188,18 @@ int main(int argc, char *argv[]) {
         s = tfs_write(fd4, "Writing data to my file. ZYXWVUTSRQPONMLKJIHGFED", 48);
         printf("tfs_write bytes: %d\n", s);
 
+        //WRITING DATA TO A FILE THAT WE CREATE
+        int fd5 = tfs_open("BenAndSarah", TO_CREATE | TO_RDWR, 0);
+        printf("Our fd: %d\n", fd5);
+        s = tfs_write(fd5, "This is our data that we are writing", 36);
+        printf("tfs_write bytes: %d\n", s);
+
 
         tfs_close(fd1);
         tfs_close(fd2);
         tfs_close(fd3);
         tfs_close(fd4);
+        tfs_close(fd5);
         
         // Write file info back to TDD and close TFS
         writefsinfo();
@@ -223,16 +230,24 @@ int main(int argc, char *argv[]) {
         // Perform application code
         char buffer[512];
         strcpy(buffer, "sometext");
+
         int fd3 = tfs_open("Another", TO_RDONLY, 0);
         printf("fd3: %d\n", fd3);
         s = tfs_read(fd3, buffer, 19); 
         printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd3, s, buffer);
+
+        //READING FROM OUR OWN FILE
+        int fd5 = tfs_open("BenAndSarah", TO_RDONLY, 0);
+        printf("Our descriptor: %d\n", fd5);
+        s = tfs_read(fd5, buffer, 50);
+        printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd5, s, buffer);
 
         int fd4 = tfs_open("MyFile", TO_RDONLY, 0);
         printf("fd4: %d\n", fd4);
         s = tfs_read(fd4, buffer, 47);
         printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd4, s, buffer);
 
+        
 
         // Write file info back to TDD and close TFS
         writefsinfo();
